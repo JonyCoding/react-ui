@@ -12,6 +12,10 @@ export enum ButtonType {
     Link = 'link'
 }
 
+// html内置的
+type NativeButtonProps = BaseButtonProps & React.ButtonHTMLAttributes<HTMLElement>
+type AnchorButtonProps = BaseButtonProps & React.AnchorHTMLAttributes<HTMLElement>
+export type ButtonProps = Partial<NativeButtonProps & AnchorButtonProps>
 interface BaseButtonProps {
     clasName?: string,
     disable?: boolean,
@@ -21,27 +25,29 @@ interface BaseButtonProps {
     href?: string
 }
 
-const Button: React.FC<BaseButtonProps> = (props) => {
+const Button: React.FC<ButtonProps> = (props) => {
     const {
         btnType,
+        className,
         disable,
         size,
         children,
-        href
+        href,
+        ...restProps
     } = props
     // btn,btn-lg,btn-primary
-    const classes = classNames('btn', {
+    const classes = classNames('btn', className,{
         [`btn-${btnType}`]: btnType,
         [`btn-${size}`]: size,
         'disabled': (btnType === ButtonType.Link) && disable
     })
     if (btnType === ButtonType.Link && href) {
         return (
-            <a className={classes} href={href}>{children}</a>
+            <a className={classes} {...restProps} href={href}>{children}</a>
         )
     } else {
         return (
-            <button className={classes} disabled={disable}>{children}</button>
+            <button className={classes}  {...restProps}  disabled={disable}>{children}</button>
         )
     }
 }
