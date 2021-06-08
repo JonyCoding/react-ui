@@ -8,7 +8,7 @@ function App() {
   return (
     <div className="App">
       <header className="App-header">
-        <Menu onSelect={(index)=>{alert(index)}}>
+        <Menu mode="vertical" onSelect={(index)=>{alert(index)}}>
           <MenuItem index={1}>
             cool link
           </MenuItem>
