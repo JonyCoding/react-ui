@@ -1,32 +1,36 @@
 import React from 'react';
 import classNames from 'classnames'
-import Button,{ButtonType,ButtonSize} from './components/Button/button'
+import Button, { ButtonType, ButtonSize } from './components/Button/button'
 import Alert from './components/Alert/alert'
 import Menu from './components/Menu/menu'
 import MenuItem from './components/Menu/menuItem'
+import SubMenu from './components/Menu/subMenu'
 function App() {
   return (
     <div className="App">
       <header className="App-header">
-        <Menu mode="vertical" onSelect={(index)=>{alert(index)}}>
-          <MenuItem index={1}>
+        <Menu onSelect={(index) => { alert(index) }}>
+          <MenuItem>
             cool link
           </MenuItem>
-          <MenuItem disabled index={2}>
+          <MenuItem disabled>
             cool link 2
           </MenuItem>
-          <MenuItem index={3}>
+          <SubMenu title="drodown">
+            <MenuItem>
+              drodown 1
+            </MenuItem>
+            <MenuItem>
+              drodown 2
+            </MenuItem>
+            <MenuItem>
+              drodown 3
+            </MenuItem>
+          </SubMenu>
+          <MenuItem>
             cool link 3
           </MenuItem>
         </Menu>
-        <Button> Hello</Button>
-        <Button autoFocus btnType={ButtonType.Primary} size={ButtonSize.large}> Hello</Button>
-        <Button disable btnType={ButtonType.Primary} size={ButtonSize.large}> Hello</Button>
-        <Button btnType={ButtonType.Primary} size={ButtonSize.large}> Hello Primary</Button>
-        <Button btnType={ButtonType.Primary} size={ButtonSize.Small}> Hello</Button>
-        <Button btnType={ButtonType.Danger} size={ButtonSize.large}> Hello</Button>
-        <Button btnType={ButtonType.Link} target="_blank" href="https://www.baidu.com" size={ButtonSize.large}> Hello</Button>
-        <Button disable btnType={ButtonType.Link} href="https://www.baidu.com" size={ButtonSize.Small}> Hello</Button>
         <p>
           Edit <code>src/App.tsx</code> and save to reload.
         </p>

@@ -23,7 +23,8 @@ const Menu: React.FC<MenuProps> = (props) => {
     const { className, mode, style, children, defaultIndex,onSelect } = props
     const [currentActive,setActive] = useState(defaultIndex)
     const classes = classNames('jony-menu', className, {
-        'menu-vertical': mode === 'vertical'
+        'menu-vertical': mode === 'vertical',
+        'menu-horizontal': mode !== 'vertical'
     })
     const handleClick = (index:number)=>{
         setActive(index)
@@ -41,7 +42,7 @@ const Menu: React.FC<MenuProps> = (props) => {
             const childElement = child as React.FunctionComponentElement<MenuItemProps>
             const { displayName } = childElement.type
             console.log("object",displayName);
-            if(displayName === 'MenuItem'){
+            if(displayName === 'MenuItem' || displayName === 'SubMenu'){
                 return React.cloneElement(childElement,{index})
             }else{
                 console.error('Is not child compontent')
