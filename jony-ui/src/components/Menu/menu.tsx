@@ -3,9 +3,9 @@ import classNames from 'classnames'
 import {MenuItemProps} from './menuItem'
 
 type menuMode = 'horizontal' | 'vertical'
-type SelectCallBack = (selectedIndex: number) => void
+type SelectCallBack = (selectedIndex: string) => void
 export interface MenuProps {
-    defaultIndex?: number;
+    defaultIndex?: string;
     className?: string;
     mode?: menuMode;
     style?: React.CSSProperties;
@@ -13,11 +13,12 @@ export interface MenuProps {
 }
 
 interface ImenuContext { 
-    index:number;
+    index:string;
     onSelect?:SelectCallBack;
+    mode?:menuMode
 }
 
-export const MenuContext = createContext<ImenuContext>({index:0})
+export const MenuContext = createContext<ImenuContext>({index:"0"})
 
 const Menu: React.FC<MenuProps> = (props) => {
     const { className, mode, style, children, defaultIndex,onSelect } = props
@@ -26,15 +27,16 @@ const Menu: React.FC<MenuProps> = (props) => {
         'menu-vertical': mode === 'vertical',
         'menu-horizontal': mode !== 'vertical'
     })
-    const handleClick = (index:number)=>{
+    const handleClick = (index:string)=>{
         setActive(index)
         if(onSelect){
             onSelect(index)
         }
     }
     const passedContext:ImenuContext = {
-        index: currentActive?currentActive:0,
+        index: currentActive?currentActive:"0",
         onSelect:handleClick,
+        mode:mode,
     }
     // 循环遍历child
     const renderChildren = () => {
@@ -43,7 +45,7 @@ const Menu: React.FC<MenuProps> = (props) => {
             const { displayName } = childElement.type
             console.log("object",displayName);
             if(displayName === 'MenuItem' || displayName === 'SubMenu'){
-                return React.cloneElement(childElement,{index})
+                return React.cloneElement(childElement,{index:index.toString()})
             }else{
                 console.error('Is not child compontent')
             }
@@ -59,7 +61,7 @@ const Menu: React.FC<MenuProps> = (props) => {
 }
 
 Menu.defaultProps = {
-    defaultIndex: 0,
+    defaultIndex: "0",
     mode: 'horizontal',
 }
 
